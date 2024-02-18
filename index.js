@@ -17,7 +17,7 @@ const secret = process.env.SECRET_KEY;
 const BASE_URL = process.env.BASE_URL;
 // app.use(cors({ credentials: true, origin: "http//localhost:3000" }));
 const allowOnlyFromSpecificOrigin = (req, res, next) => {
-  const allowedOrigin = 'http://localhost:3000';
+  const allowedOrigin = BASE_URL;
   const origin = req.headers.origin;
   console.log(origin);
   if (origin === allowedOrigin) {
@@ -31,7 +31,7 @@ const allowOnlyFromSpecificOrigin = (req, res, next) => {
 
 
 // Use the custom CORS middleware
-app.use(allowOnlyFromSpecificOrigin);
+// app.use(allowOnlyFromSpecificOrigin);
 app.use(express.json());
 app.use(cookieParser());
 
