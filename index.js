@@ -15,8 +15,23 @@ const fs = require("fs");
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET_KEY; 
 const BASE_URL = process.env.BASE_URL;
+// app.use(cors({ credentials: true, origin: "http//localhost:3000" }));
+const allowOnlyFromSpecificOrigin = (req, res, next) => {
+  const allowedOrigin = 'http://localhost:3000';
+  const origin = req.headers.origin;
+  console.log(origin);
+  if (origin === allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+  } else {
+    res.status(403).json({ error: 'Access denied. Origin not allowed.' });
+  }
+};
 
-app.use(cors({ credentials: true, origin: `${BASE_URL}` }));
+
+// Use the custom CORS middleware
+app.use(allowOnlyFromSpecificOrigin);
 app.use(express.json());
 app.use(cookieParser());
 
@@ -29,6 +44,7 @@ mongoose.connect(
 );
 
 app.post("/register", async (req, res) => {
+  console.log("i am in");
   const { username, password } = req.body;
   try {
     const userDoc = await User.create({
