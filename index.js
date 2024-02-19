@@ -30,22 +30,22 @@ const BASE_URL = process.env.BASE_URL;
 // };
 
 
-const allowAllOrigins = (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://ankushblog.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+// const allowAllOrigins = (req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://ankushblog.vercel.app');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+//   if (req.method === 'OPTIONS') {
+//     return res.status(200).end();
+//   }
 
-  next();
-};
+//   next();
+// };
 
 // Use the custom CORS middleware
 // app.use(allowOnlyFromSpecificOrigin);
-app.use(allowAllOrigins);
+// app.use(allowAllOrigins);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
