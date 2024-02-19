@@ -58,7 +58,10 @@ app.post("/login", async (req, res) => {
     if (passOk) {
       //logged in
       jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.log("we are getting error because of JWT");
+          throw err;
+        }
         res.cookie("token", token).json({
           id: userDoc._id,
           username,
