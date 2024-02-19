@@ -53,8 +53,10 @@ app.post("/login", async (req, res) => {
     res.status(404).json("Invalid User.Please Try with valid userInformation");
   } else {
     const passOk = bcrypt.compareSync(password, userDoc.password);
+    console.log("okay bye see you");
     if (passOk) {
       //logged in
+      console.log("we are going to login");
       jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
         if (err) {
           console.log("we are getting error because of JWT");
