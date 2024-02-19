@@ -20,13 +20,6 @@ app.use(cors( {credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 
-
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
-
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 const PORT = process.env.PORT||4000;
