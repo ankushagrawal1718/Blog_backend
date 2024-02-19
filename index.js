@@ -15,40 +15,12 @@ const fs = require("fs");
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET_KEY; 
 const BASE_URL = process.env.BASE_URL;
-// app.use(cors({ credentials: true, origin: "http//localhost:3000" }));
-// const allowOnlyFromSpecificOrigin = (req, res, next) => {
-//   const allowedOrigin = BASE_URL;
-//   const origin = req.headers.origin;
-//   console.log(origin);
-//   if (origin === allowedOrigin) {
-//     res.setHeader('Access-Control-Allow-Origin', origin);
-//     res.setHeader('Access-Control-Allow-Credentials', 'true');
-//     next();
-//   } else {
-//     res.status(403).json({ error: 'Access denied. Origin not allowed.' });
-//   }
-// };
 
-
-// const allowAllOrigins = (req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', 'https://ankushblog.vercel.app');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-//   if (req.method === 'OPTIONS') {
-//     return res.status(200).end();
-//   }
-
-//   next();
-// };
-
-// Use the custom CORS middleware
-// app.use(allowOnlyFromSpecificOrigin);
-// app.use(allowAllOrigins);
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
+
+app.use(cors({ credentials: true }));
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
@@ -141,7 +113,7 @@ app.put('/post',uploadMiddleware.single("file"),async(req,res)=>{
         const parts = originalname.split(".");
         const ext = parts[parts.length - 1];
         newPath = path + "." + ext;
-        fs.renameSync(path, newPath); 
+        fs.renameSync(path, newPath);
     }
 
     const {token} = req.cookies;
@@ -180,8 +152,6 @@ app.get("/post/:id", async (req, res) => {
   const postDoc = await Post.findById(id).populate("author", ["username"]);
   res.json(postDoc);
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Our blog app is listening to port ${PORT}`);
