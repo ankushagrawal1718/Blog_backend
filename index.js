@@ -16,7 +16,7 @@ const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET_KEY; 
 const BASE_URL = process.env.BASE_URL;
 
-app.use(cors( {credentials: true}));
+app.use(cors( {credentials: true,origin:'https://ankushblog.vercel.app'}));
 app.use(express.json());
 app.use(cookieParser());
 
